@@ -1,0 +1,388 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPFx54z43kH316HolCNuc/w",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/mirovoy465/colab/blob/main/T1nkoff%20ML%202O23\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4QnnqbwFfwu9",
+        "outputId": "e0854816-3757-4a5b-ab03-9767c53c2d09"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "5 13\n",
+            "3 10 300 15 3\n",
+            "10\n"
+          ]
+        }
+      ],
+      "source": [
+        "revolver_amount, cash = map(int, input().split())\n",
+        "revolver_prices = map(int, input().split())\n",
+        "max_price = 0\n",
+        "for price in revolver_prices:\n",
+        "  if price <= cash and price > max_price:\n",
+        "    max_price = price\n",
+        "print(max_price)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "input_string = input()\n",
+        "sheriff_count = dict.fromkeys(['s', 'h', 'e', 'r', 'i', 'f'], 0)\n",
+        "for char in input_string:\n",
+        "  if char in sheriff_count:\n",
+        "    sheriff_count[char] += 1\n",
+        "\n",
+        "f_2 = int(sheriff_count['f'] / 2)\n",
+        "if sheriff_count['f'] % 2 == 0:\n",
+        "  sheriff_count['f1'] = f_2\n",
+        "  sheriff_count['f2'] = f_2\n",
+        "else:\n",
+        "  sheriff_count['f1'] = f_2 + 1\n",
+        "  sheriff_count['f2'] = f_2\n",
+        "sheriff_count.pop('f')\n",
+        "word_count = 0\n",
+        "sheriff_count_list = list(sheriff_count.values())\n",
+        "\n",
+        "while True:\n",
+        "  if all(sheriff_count_list): word_count += 1\n",
+        "  else: break\n",
+        "  for i in range(len(sheriff_count_list)):\n",
+        "    sheriff_count_list[i] -= 1\n",
+        "\n",
+        "print(word_count)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4JOf5YK8jHr2",
+        "outputId": "4f956fa4-b1b5-4515-f752-1306177c6c1b"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "fheriherffazfszkisrrs\n",
+            "2\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def trim_matching_edges(a, b):\n",
+        "    start = 0\n",
+        "    while start < len(a) and start < len(b) and a[start] == b[start]:\n",
+        "        start += 1\n",
+        "\n",
+        "    end_a = len(a) - 1\n",
+        "    end_b = len(b) - 1\n",
+        "    while end_a >= 0 and end_b >= 0 and a[end_a] == b[end_b]:\n",
+        "        end_a -= 1\n",
+        "        end_b -= 1\n",
+        "\n",
+        "    a_trimmed = a[start:end_a+1]\n",
+        "    b_trimmed = b[start:end_b+1]\n",
+        "\n",
+        "    return a_trimmed, b_trimmed\n",
+        "\n",
+        "def is_winning_sequence(cards,target):\n",
+        "  if sorted(cards) == target:\n",
+        "    return 'YES'\n",
+        "  else:\n",
+        "    return 'NO'\n",
+        "\n",
+        "n = map(int, input().split())\n",
+        "cards = list(map(int, input().split()))\n",
+        "cards_target = list(map(int, input().split()))\n",
+        "\n",
+        "cards, cards_target = trim_matching_edges(cards, cards_target)\n",
+        "print(is_winning_sequence(cards, cards_target))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ojOoxUQEwU8C",
+        "outputId": "3ef20ee6-9a3e-4413-9972-ecd23712e224"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "5\n",
+            "1 4 2 2 4\n",
+            "1 4 4 2 2\n",
+            "NO\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def subset_sum(arr, n):\n",
+        "    m = len(arr)\n",
+        "    dp = [[False] * (n + 1) for _ in range(m + 1)]\n",
+        "\n",
+        "    for i in range(m + 1):\n",
+        "        dp[i][0] = True\n",
+        "\n",
+        "    for i in range(1, m + 1):\n",
+        "        for j in range(1, n + 1):\n",
+        "            if arr[i-1] > j:\n",
+        "                dp[i][j] = dp[i-1][j]\n",
+        "            else:\n",
+        "                dp[i][j] = dp[i-1][j] or dp[i-1][j-arr[i-1]]\n",
+        "\n",
+        "    if not dp[m][n]:\n",
+        "        return -1\n",
+        "\n",
+        "    res = []\n",
+        "    w = n\n",
+        "    for i in range(m, 0, -1):\n",
+        "        if not dp[i-1][w]:\n",
+        "            res.append(arr[i-1])\n",
+        "            w -= arr[i-1]\n",
+        "\n",
+        "    return len(res), res\n",
+        "\n",
+        "n, _ = list(map(int, input().split()))\n",
+        "numbers = list(map(int, input().split()))\n",
+        "duplicated_numbers = [num for num in numbers for _ in range(2)]\n",
+        "\n",
+        "result = subset_sum(duplicated_numbers, n)\n",
+        "if result != -1:\n",
+        "    count, elements = result\n",
+        "    print(count)\n",
+        "    print(*elements)\n",
+        "else:\n",
+        "    print(-1)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-yeoW-uvGDkl",
+        "outputId": "62a682f0-3919-41ae-cc79-32c824a3b329"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "5 2\n",
+            "3 4\n",
+            "-1\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def can_destroy_roads(n, m, roads, x):\n",
+        "    parent = list(range(n + 1))\n",
+        "\n",
+        "    def find(x):\n",
+        "        if parent[x] != x:\n",
+        "            parent[x] = find(parent[x])\n",
+        "        return parent[x]\n",
+        "\n",
+        "    def union(x, y):\n",
+        "        root_x = find(x)\n",
+        "        root_y = find(y)\n",
+        "        if root_x != root_y:\n",
+        "            parent[root_x] = root_y\n",
+        "\n",
+        "    roads.sort(key=lambda r: r[2])\n",
+        "\n",
+        "    states = n\n",
+        "    count = 0\n",
+        "\n",
+        "    for u, v, w in roads:\n",
+        "        if w > x:\n",
+        "            break\n",
+        "        if find(u) != find(v):\n",
+        "            union(u, v)\n",
+        "            states -= 1\n",
+        "        else:\n",
+        "            count += 1\n",
+        "\n",
+        "    return count == 0\n",
+        "\n",
+        "def find_max_x(n, m, roads):\n",
+        "    left = 0\n",
+        "    right = max(roads, key=lambda r: r[2])[2]\n",
+        "    result = None\n",
+        "\n",
+        "    while left <= right:\n",
+        "        mid = (left + right) // 2\n",
+        "        if can_destroy_roads(n, m, roads, mid):\n",
+        "            result = mid\n",
+        "            left = mid + 1\n",
+        "        else:\n",
+        "            right = mid - 1\n",
+        "\n",
+        "    return result\n",
+        "\n",
+        "n, m = map(int, input().split())\n",
+        "roads = []\n",
+        "\n",
+        "for _ in range(m):\n",
+        "  u, v, w = map(int, input().split())\n",
+        "  roads.append((u, v, w))\n",
+        "\n",
+        "x = find_max_x(n, m, roads)\n",
+        "print(x)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QBydG0dBG2zJ",
+        "outputId": "a97fe334-ec2a-4db0-c0cb-1cbb20feb49a"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "2 2\n",
+            "1 2 6\n",
+            "2 1 9\n",
+            "8\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class DisjointSet:\n",
+        "    def __init__(self, n):\n",
+        "        self.parent = list(range(n + 1))\n",
+        "        self.counts = [1] * (n + 1)\n",
+        "\n",
+        "    def find(self, x):\n",
+        "        if self.parent[x] == x:\n",
+        "            return x\n",
+        "        self.parent[x] = self.find(self.parent[x])\n",
+        "        return self.parent[x]\n",
+        "\n",
+        "    def union(self, x, y):\n",
+        "        root_x = self.find(x)\n",
+        "        root_y = self.find(y)\n",
+        "        if root_x != root_y:\n",
+        "            self.parent[root_y] = root_x\n",
+        "            for i in range(len(self.counts)-1):\n",
+        "                if self.find(i+1) == root_x:\n",
+        "                    self.counts[i+1] += 1\n",
+        "\n",
+        "\n",
+        "n, m = map(int, input().split())\n",
+        "dsu = DisjointSet(n)\n",
+        "\n",
+        "answers = []\n",
+        "for _ in range(m):\n",
+        "    query = input().split()\n",
+        "    if query[0] == '1':\n",
+        "        x, y = map(int, query[1:])\n",
+        "        dsu.union(x, y)\n",
+        "    elif query[0] == '2':\n",
+        "        x, y = map(int, query[1:])\n",
+        "        root_x = dsu.find(x)\n",
+        "        root_y = dsu.find(y)\n",
+        "        answers.append(\"YES\" if root_x == root_y else \"NO\")\n",
+        "    elif query[0] == '3':\n",
+        "        x = int(query[1])\n",
+        "        root_x = dsu.find(x)\n",
+        "        answers.append(str(dsu.counts[x]))\n",
+        "\n",
+        "\n",
+        "for ans in answers:\n",
+        "    print(ans)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "mES0f9VfY8aX",
+        "outputId": "361c0359-aa6d-40d3-8272-6940c31eb5f7"
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "7 13\n",
+            "2 3 1\n",
+            "3 3\n",
+            "1 2 4\n",
+            "2 1 1\n",
+            "3 4\n",
+            "2 3 4\n",
+            "1 3 4\n",
+            "3 4\n",
+            "1 7 3\n",
+            "1 1 3\n",
+            "3 7\n",
+            "3 1\n",
+            "2 7 4\n",
+            "NO\n",
+            "1\n",
+            "YES\n",
+            "2\n",
+            "NO\n",
+            "3\n",
+            "3\n",
+            "2\n",
+            "YES\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
